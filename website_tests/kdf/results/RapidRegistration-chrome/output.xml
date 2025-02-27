@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.11.4 on darwin)" generated="2025-02-13T16:00:44.231150" rpa="false" schemaversion="5">
+<suite id="s1" name="RapidRegistration" source="/Users/manmeetchadha/seleniumprojects/elevatederm/website_tests/kdf/tests/RapidRegistration.robot">
+<test id="s1-t1" name="AT_ELEVATED_01" line="12">
+<kw name="Navigate To and Verify" owner="PageActions">
+<kw name="Navigate To" owner="PageActions">
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-02-13T16:00:45.588950" level="INFO">Opening browser 'chrome' to base url 'https://elevate-derm.com/'.</msg>
+<arg>${URL}</arg>
+<arg>${Browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-02-13T16:00:45.588723" elapsed="3.968556"/>
+</kw>
+<arg>'${Browser}' in ['headlesschrome', 'headlessfirefox']</arg>
+<arg>Open Headless Browser</arg>
+<arg>${Browser}</arg>
+<arg>${URL}</arg>
+<arg>ELSE</arg>
+<arg>Open Browser</arg>
+<arg>${URL}</arg>
+<arg>${Browser}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-02-13T16:00:45.588360" elapsed="3.969619"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-02-13T16:00:49.558478" elapsed="0.424788"/>
+</kw>
+<arg>${Browser}</arg>
+<arg>${URL}</arg>
+<status status="PASS" start="2025-02-13T16:00:45.587316" elapsed="4.396189"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-13T16:01:20.014361" level="INFO">Slept 30 seconds.</msg>
+<arg>30</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-13T16:00:49.983768" elapsed="30.030858"/>
+</kw>
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>20s</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-02-13T16:01:20.015470" elapsed="0.030854"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<arg>${Verification_Text}</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="PASS" start="2025-02-13T16:01:20.047031" elapsed="0.117402"/>
+</kw>
+<arg>${BROWSER}</arg>
+<arg>${TEST_URL}</arg>
+<arg>Welcome</arg>
+<status status="PASS" start="2025-02-13T16:00:45.586877" elapsed="34.577881"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-13T16:01:25.167570" level="INFO">Slept 5 seconds.</msg>
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-13T16:01:20.166445" elapsed="5.001329"/>
+</kw>
+<kw name="Click" owner="PageActions">
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>10s</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-02-13T16:01:25.169073" elapsed="0.001349"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-02-13T16:01:25.170606" elapsed="0.010708"/>
+</kw>
+<kw name="Set Focus To Element" owner="SeleniumLibrary">
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Sets the focus to the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-02-13T16:01:25.181595" elapsed="0.033741"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-13T16:01:28.216756" level="INFO">Slept 3 seconds.</msg>
+<arg>3s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-13T16:01:25.216182" elapsed="3.000685"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-02-13T16:01:28.217389" level="INFO">Clicking element 'xpath=/html/body/div[1]/div/div/div/div/section/div[2]/div/div/div/div/div/div[2]/i'.</msg>
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-02-13T16:01:28.217088" elapsed="0.059587"/>
+</kw>
+<arg>xpath</arg>
+<arg>/html/body/div[1]/div/div/div/div/section/div[2]/div/div/div/div/div/div[2]/i</arg>
+<status status="PASS" start="2025-02-13T16:01:25.168306" elapsed="3.108477"/>
+</kw>
+<kw name="Click" owner="PageActions">
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>10s</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-02-13T16:01:28.277325" elapsed="0.000901"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-02-13T16:01:28.278401" elapsed="0.009597"/>
+</kw>
+<kw name="Set Focus To Element" owner="SeleniumLibrary">
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Sets the focus to the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-02-13T16:01:28.288383" elapsed="0.015658"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-13T16:01:31.305512" level="INFO">Slept 3 seconds.</msg>
+<arg>3s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-13T16:01:28.304513" elapsed="3.001229"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-02-13T16:01:31.306725" level="INFO">Clicking element 'xpath=//a[contains(.,'RAPIDS Registration')]'.</msg>
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-02-13T16:01:31.306166" elapsed="0.168918"/>
+</kw>
+<arg>xpath</arg>
+<arg>//a[contains(.,'RAPIDS Registration')]</arg>
+<status status="PASS" start="2025-02-13T16:01:28.277005" elapsed="3.198247"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-13T16:01:36.476304" level="INFO">Slept 5 seconds.</msg>
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-13T16:01:31.475714" elapsed="5.000753"/>
+</kw>
+<kw name="Verify Text In Locator" owner="PageActions">
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>10s</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2025-02-13T16:01:36.477448" elapsed="0.001506"/>
+</kw>
+<kw name="Wait Until Element Contains" owner="SeleniumLibrary">
+<msg time="2025-02-13T16:01:48.318837" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-02-13T16:01:48.319124" level="FAIL">Element with locator 'element=&lt;span class=""&gt;Register Now&lt;/span&gt;' not found.</msg>
+<arg>${Locator_Type}=${Locator_Value}</arg>
+<arg>${Verification_Text}</arg>
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<status status="FAIL" start="2025-02-13T16:01:36.479155" elapsed="11.845161">Element with locator 'element=&lt;span class=""&gt;Register Now&lt;/span&gt;' not found.</status>
+</kw>
+<arg>element</arg>
+<arg>&lt;span class=""&gt;Register Now&lt;/span&gt;</arg>
+<arg>Register Now</arg>
+<status status="FAIL" start="2025-02-13T16:01:36.476867" elapsed="11.847662">Element with locator 'element=&lt;span class=""&gt;Register Now&lt;/span&gt;' not found.</status>
+</kw>
+<kw name="Click" owner="PageActions">
+<arg>element &lt;span class=""&gt;Register Now&lt;/span&gt;</arg>
+<status status="NOT RUN" start="2025-02-13T16:01:48.324789" elapsed="0.000056"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-02-13T16:01:48.325024" elapsed="0.000031"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2025-02-13T16:01:48.325267" elapsed="0.000042"/>
+</kw>
+<status status="FAIL" start="2025-02-13T16:00:45.585047" elapsed="62.740544">Element with locator 'element=&lt;span class=""&gt;Register Now&lt;/span&gt;' not found.</status>
+</test>
+<doc>This is a test suite for Elevate Derm Registration</doc>
+<status status="FAIL" start="2025-02-13T16:00:44.232476" elapsed="64.093689"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="RapidRegistration" id="s1" pass="0" fail="1" skip="0">RapidRegistration</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-02-13T16:00:45.461604" level="ERROR">Error in file '/Users/manmeetchadha/seleniumprojects/elevatederm/website_tests/kdf/resources/CustomActions.robot' on line 5: Importing library 'Requests' failed: ModuleNotFoundError: No module named 'Requests'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  /Library/Frameworks/Python.framework/Versions/3.11/bin
+  /Library/Frameworks/Python.framework/Versions/3.11/lib/python311.zip
+  /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11
+  /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/lib-dynload
+  /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages</msg>
+</errors>
+</robot>
