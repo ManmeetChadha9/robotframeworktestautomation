@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="RapidRegistration" tests="1" errors="0" failures="1" skipped="0" time="64.094" timestamp="2025-02-13T16:00:44.232476">
-<testcase classname="RapidRegistration" name="AT_ELEVATED_01" time="62.741">
-<failure message="Element with locator 'element=&lt;span class=&quot;&quot;&gt;Register Now&lt;/span&gt;' not found." type="AssertionError"/>
-</testcase>
-<properties>
-<property name="Documentation" value="This is a test suite for Elevate Derm Registration"/>
-</properties>
-</testsuite>
