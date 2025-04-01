@@ -21,6 +21,8 @@ Edge: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 Firefox: https://github.com/mozilla/geckodriver/releases
 Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
 
-# COMMAND to execute robot tests
+# COMMAND to create robot test files from the XLS file
+python libs/TestCaseGen.py data/GUITestCases.xlsx tests
 
-robot --variable TEST_ENV:http://35.224.102.138 --variable BROWSER:headlesschrome -d results/TrialSignUp-headlesschrome -x TEST-TrialSignUp.xml tests/TrialSignUp.robot
+# COMMAND to execute robot tests
+robot --variable TEST_URL:"https://saucedemo.com/" --variable BROWSER:headlesschrome -d results/SwagLabs-headlesschrome -x SwagLabs.xml tests/SwagLabs.robot
