@@ -1,5 +1,5 @@
 
-The Python Keyword based Test Automation framework is a tool built using Python custom libraries and also uses the inbuilt python features.
+The Python Keyword based Test Automation framework is a tool built using Robotframework and Python custom libraries and uses the inbuilt python features.
 
 It uses:
 * Robot Framework libraries
