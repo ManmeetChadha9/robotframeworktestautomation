@@ -37,7 +37,7 @@ Get Browser Console Log Entries
     ${selenium}=    Get Library Instance    SeleniumLibrary
     ${webdriver}=    Set Variable     ${selenium._drivers.active_drivers}[0]
     ${log entries}=    Evaluate    $webdriver.get_log('browser')
-    Return    ${log entries}
+   [Return]   ${log entries}
 
 
 Open Headless Browser
@@ -180,7 +180,7 @@ Add Days To Today
     [Arguments]  ${days}
     ${TodaysDate}=  Todays Date
     ${Date}=  Get Date After Adding Days  ${TodaysDate}  ${days}  %m.%d.%Y
-    Return    ${Date}
+   [Return]   ${Date}
 
 Setup Call On
     [Arguments]  ${datetime}
@@ -222,7 +222,7 @@ Get Text From Table
     ${textlocator}=   Get Table Column Row Locator   ${Locator_Type}  ${Table_Locator_Value}  ${Element_Locator_Value}  ${col_num}  ${lookup_text}  ${lookup_text2}
     set selenium timeout  10s
     ${text}=   get text from xpath  ${textlocator}
-    Return  ${text}
+   [Return] ${text}
 
 Identify And Check Checkbox
     [Arguments]  ${Locator_Type}  ${Table_Locator_Value}  ${Element_Locator_Value}  ${first_last_name}
@@ -238,7 +238,7 @@ Set Focus on
 
 Import Lab Results And Open Import Details
     [Arguments]  ${Locator_Type}  ${Locator_Value}  ${APP_VERSION}  ${URL}
-    ${AssayResultSpreadsheetid}=  Import Assay Results  ${APP_VERSION}  ${TEST_ENV}
+    ${AssayResultSpreadsheetid}=  Import Assay Results  ${APP_VERSION}  ${URL}
     Click  ${Locator_Type}  ${Locator_Value}
     #click element  ${Locator_Type}=${Locator_Value}
     set selenium timeout  10s
@@ -248,29 +248,33 @@ Import Lab Results And Open Import Details
 
 Check Text In Table
     [Arguments]  ${table_locator}  ${rows}  ${col_num}  ${lookup_text1}  ${lookup_text2}=${None}  ${lookup_text3}=${None}
-    : FOR    ${INDEX}  IN RANGE  1  ${rows}
-     \   Log  ${INDEX}
-     \  ${text}=  Get Text From Xpath  ${table_locator}/tbody/tr[${INDEX}]/td[${col_num}]
-     \  ${text}=  convert to string  ${text}
+     FOR    ${INDEX}  IN RANGE  1  ${rows}
+     Log  ${INDEX}
+     ${text}=  Get Text From Xpath  ${table_locator}/tbody/tr[${INDEX}]/td[${col_num}]
+     ${text}=  convert to string  ${text}
      #Check whether this table location has the desired text or not.
-     \  should contain any  ${text}  ${lookup_text1}  ${lookup_text2}  ${lookup_text3}
+     should contain any  ${text}  ${lookup_text1}  ${lookup_text2}  ${lookup_text3}
+     END
+
+
 
 Get Text From Xpath
     [Arguments]  ${Locator_Value}
     ${text}=   Get Text  ${Locator_Value}
     Log  ${text}
-    Return  ${text}
+   [Return] ${text}
 
 Get List From Table
     [Arguments]    ${table_locator}  ${rows}  ${col_num}  ${Jump}
     ${text_list}=  create list
-    : FOR    ${INDEX}  IN RANGE  1  ${rows}  ${Jump}
-     \   Log  ${INDEX}
-     \   exit for loop if  ${INDEX} > ${rows}
-     \  ${text}=  Get Text From Xpath  ${table_locator}/tbody/tr[${INDEX}]/td[${col_num}]
-     \  ${text}=  convert to string  ${text}
-     \  Run keyword   Append To List  ${text_list}  ${text}
-     Return  ${text_list}
+    FOR    ${INDEX}  IN RANGE  1  ${rows}  ${Jump}
+    Log  ${INDEX}
+    exit for loop if  ${INDEX} > ${rows}
+     ${text}=  Get Text From Xpath  ${table_locator}/tbody/tr[${INDEX}]/td[${col_num}]
+     ${text}=  convert to string  ${text}
+     Run keyword   Append To List  ${text_list}  ${text}
+     END
+    [Return] ${text_list}
 
 Set Analysis Approval
     [Arguments]   ${locator_type}  ${table_locator}  ${test_name}  ${col_num}  ${approval}  ${element_locator}=${emptystring}

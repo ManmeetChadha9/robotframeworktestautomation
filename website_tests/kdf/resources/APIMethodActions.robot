@@ -1,7 +1,6 @@
 *** Settings ***
 Documentation    Suite description
 Library  RequestsLibrary
-Library  Requests
 Library  JSONLibrary
 Library  json
 Library  ../libs/CustomSeleniumLibrary.py
@@ -23,7 +22,7 @@ Get Json Param
     should be equal as strings  ${Response.status_code}  200
     ${json} =  Set variable  ${Response.json()}
     Log  ${json}
-    Return  ${json['${jsonparam}']}
+    [Return]  ${json['${jsonparam}']}
 
 
 Get Json
@@ -38,7 +37,7 @@ Get Json
     ${json} =  Set variable  ${Response.json()}
     Log  ${json}
     Log  ${Response.json()}
-    Return  ${json}
+   [Return] ${json}
 
 
 Get Legal ID
@@ -57,7 +56,7 @@ Get Legal ID
         Log  ${legalid}
         Exit For Loop IF    '${legalid}' is not '${None}'
     END
-    Return  ${legalid}
+   [Return] ${legalid}
 
 Get Customer ID
      [Arguments]  ${APP_VERSION}  ${URL}  ${emailid}
@@ -73,7 +72,7 @@ Get Customer ID
          Log  ${legalid}
          Exit For Loop IF    '${legalid}' is not '${None}'
      END
-     Return  ${legalid}
+    [Return] ${legalid}
 
 Get Emailid
     [Arguments]  ${APP_VERSION}  ${URL}  ${legalid}
@@ -89,7 +88,7 @@ Get Emailid
         Log  ${emailid}
         Exit For Loop IF    '${emailid}' is not '${None}'
     END
-    Return  ${emailid}
+   [Return] ${emailid}
 
 Get Human ID
     [Arguments]  ${APP_VERSION}  ${URL}  ${legalid}
@@ -106,7 +105,7 @@ Get Human ID
       Log  ${humanId}
       Exit For Loop IF    '${humanId}' is not '${None}'
     END
-    Return  ${humanId}
+   [Return] ${humanId}
 
 Get Legal ID List
     [Arguments]  ${APP_VERSION}  ${URL}
@@ -120,7 +119,7 @@ Get Legal ID List
       Run keyword   Append To List  ${Id_list}  ${legal_id}
       Log     ${Id_list}
      END
-     Return  ${Id_list}
+    [Return] ${Id_list}
 
 Get Consent Id
 
@@ -135,7 +134,7 @@ Get Consent Id
 #     #\   ${legalid}=  run keyword if  ${len}>0  Get Key Value  ${data['emailAddresses'][0]}  'emailAddress'  ${emailid}  'legalEntityId'
     ${consentid}=  run keyword if  ${list_len}>0  Get Key Value  ${json}  ${list_len}  'name'  ${names}  'id'
     Log  ${consentid}
-    Return  ${consentid}
+   [Return] ${consentid}
 
 Get Consent Version
 
@@ -145,7 +144,7 @@ Get Consent Version
     ${consentversion}=  run keyword if  ${list_len}>0  Get Key Value  ${json}  ${list_len}  'name'  ${names}  'version'
     Log  ${consentversion}
     ${consentversion}=  Set Variable  ${consentversion['version']}
-    Return  ${consentversion}
+   [Return] ${consentversion}
 
 Get Consent Content
     [Arguments]    ${APP_VERSION}   ${URL}  ${names}
@@ -155,7 +154,7 @@ Get Consent Content
     Log  ${consentversion}
     ${consent_content}=  Set Variable  ${consentversion['content']}
     Log  ${consent_content}
-    Return  ${consent_content}
+   [Return] ${consent_content}
 
 
 Change Consent Data
@@ -173,7 +172,7 @@ Change Consent Data
     ${Response} =  Post On Session  my_session  ${account_api_consent_change}  headers=${headers}  data=${createdjson}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 
 
@@ -193,7 +192,7 @@ Get Wizard ID
 #     #\   ${legalid}=  run keyword if  ${len}>0  Get Key Value  ${data['emailAddresses'][0]}  'emailAddress'  ${emailid}  'legalEntityId'
     ${wizid}=  run keyword if  ${list_len}>0  Get Key Value  ${json_list}  ${list_len}  'name'  ${names}  'id'
     Log  ${wizid}
-    Return  ${wizid}
+   [Return] ${wizid}
 
 Get Upcoming Event Value
     [Arguments]  ${APP_Version}  ${URL}   ${upcomingEventId}   ${seqNumValue}   ${getvalue}
@@ -211,7 +210,7 @@ Get Upcoming Event Value
 #     Exit For Loop IF    '${upcomingid}' is not '${None}'
      ${upcomingid}=  run keyword if  ${lenjson}>0  Get Key Value  ${json}  ${lenjson}  'upcomingEventType'  ${upcomingEventId}   '${getvalue}'    'seqNum'    ${seqNumValue}
      Log  ${upcomingid}
-     Return    ${upcomingid}
+    [Return]   ${upcomingid}
 
 
 Register QPad
@@ -251,7 +250,7 @@ Get Kit ID
      ${id}=  run keyword if  '${data['hid']}' == '${kitid}'  Set Variable   ${data['id']}
      Exit For Loop IF    '${id}' is not '${None}'
     END
-    Return  ${id}
+   [Return] ${id}
 
 
 Get Lab ID
@@ -261,7 +260,7 @@ Get Lab ID
     ${lenjson}=  get length  ${json}
     ${labid}=  run keyword if  ${lenjson}>0  Get Key Value  ${json}  ${lenjson}  'name'  ${name}   'id'  'organizationType'  ${organizationType}
     Log  ${labid}
-    Return    ${labid}
+   [Return]   ${labid}
 
 
 
@@ -271,14 +270,14 @@ Get Kits Count
     ${product_api_kits_status}=   Catenate    SEPARATOR=  ${product_api_kits}  ${kitstatus}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_kits_status}  ${account_api_oauthlogistics}
     ${kits_total}=   Set Variable   ${json['total']}
-    Return  ${kits_total}
+   [Return] ${kits_total}
 
 Get Lab Kits Count
     [Arguments]  ${APP_VERSION}  ${URL}  ${AnalysisStatus}  ${labid}
     ${product_api_analysisRequestStatusType}=   Catenate    SEPARATOR=  ${product_api_analysisRequestStatusType}  ${AnalysisStatus}&labId=${labid}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_analysisRequestStatusType}  ${account_api_oauthlab}
     ${kits_total}=   Set Variable   ${json['total']}
-    Return  ${kits_total}
+   [Return] ${kits_total}
 
 Get Analysis Request ID
     [Arguments]  ${APP_VERSION}  ${URL}  ${kitid}  ${kitStatus}
@@ -289,7 +288,7 @@ Get Analysis Request ID
     #Log  ${json_list}
     log  ${json['id']}
     ${id}=  Set Variable  ${json['id']}
-    Return  ${id}
+   [Return] ${id}
 
 Get Order ID
     [Arguments]  ${APP_VERSION}  ${URL}  ${emailid}  ${orderstatus}
@@ -305,7 +304,7 @@ Get Order ID
      ${order-id}=  Set Variable If  '${data['status']['type']}' == ${orderstatus}  ${data['id']}
      Exit For Loop IF    '${order-id}' is not '${None}'
     END
-    Return  ${order-id}
+   [Return] ${order-id}
 
 Get Order Line ID
     [Arguments]  ${APP_VERSION}  ${URL}  ${orderid}
@@ -321,7 +320,7 @@ Get Order Line ID
       Run keyword   Append To List  ${OrderLinelist}  ${orderline-id}
       Log  ${OrderLinelist}
     END
-     Return  @{OrderLinelist}
+    [Return] @{OrderLinelist}
 
 
 
@@ -357,7 +356,7 @@ Create Kit Import XL Rows
     ${kitimportfile}=   Catenate    SEPARATOR=  data/  ${kitimportfilename}
     ${kitOrderJson}=  Prepare Json  @{listForJson}
     Write_To_KitImportXL  ${listoflist}  ${kitimportfile}
-    Return  ${kitIdlist}  ${kitOrderJson}
+   [Return] ${kitIdlist}  ${kitOrderJson}
 
 Import Kits to Stock
     [Arguments]  ${APP_VERSION}  ${URL}
@@ -403,7 +402,7 @@ Import Assay Results
     should be equal as strings  ${Response.status_code}  200
     Log  ${Response.text}
     ${AssayResultSpreadsheetid}=  Get Substring  ${Response.text}  0  8
-    Return  ${AssayResultSpreadsheetid}
+   [Return] ${AssayResultSpreadsheetid}
 
 
 Ship Order
@@ -415,7 +414,7 @@ Ship Order
     ${Response} =  Post On Session  my_session  ${product_api_shipkits}  headers=${headers}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 
 
@@ -432,7 +431,7 @@ Get Product Type ID
     Exit For Loop IF    '${producttype_id}' is not '${None}'
     END
     log  ${producttype_id}
-    Return  ${producttype_id}
+   [Return] ${producttype_id}
 
 Get Bundle Kit Type ID
     [Arguments]  ${APP_VERSION}  ${URL}  ${producttype}
@@ -449,7 +448,7 @@ Get Bundle Kit Type ID
     ${bundleKIt}=  set variable  ${producttype_id[0]}
     ${bundleKItId}=  set variable  ${bundleKIt['id']}
     log  ${bundleKItId}
-    Return  ${bundleKItId}
+   [Return] ${bundleKItId}
 
 
 Create Order
@@ -490,7 +489,7 @@ Create Order
     ${Response} =  Post On Session  my_session  ${product_api_createorder}  headers=${headers}  data=${createorderfinaljson}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 
 Validate Address
@@ -502,7 +501,7 @@ Validate Address
     ${Response} =  Post On Session  my_session  ${account_api_validateaddress}  headers=${headers}  data=${addressjson}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 
 Shipment Order
@@ -522,21 +521,21 @@ Shipment Order
     ${Response} =  Post On Session  my_session  ${account_api_shipment}  headers=${headers}  data=${shipmentfinal}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 Get Order Number
     [Arguments]    ${APP_VERSION}  ${URL}   ${orderid}
     ${product_api_ordernumber}=   Catenate    SEPARATOR=  ${product_api_orderNumber}  ${orderid}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_ordernumber}  ${account_api_oauthfulfillment}
     log   ${json['orderNumber']}
-    Return  ${json['orderNumber']}
+   [Return] ${json['orderNumber']}
 
 Get Tracking Number
     [Arguments]    ${APP_VERSION}  ${URL}   ${kitid}
     ${product_api_kit}=   Catenate    SEPARATOR=  ${product_api_kitdetails}  ${kitid}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_kit}  ${account_api_oauthlogistics}
     log   ${json['labTrackNum']}
-    Return  ${json['labTrackNum']}
+   [Return] ${json['labTrackNum']}
 
 
 
@@ -550,7 +549,7 @@ Prepare Json
       Log  ${req_dict}
     ${req_json}    Json.Dumps    ${req_dict}
     END
-    Return    ${req_json}
+   [Return]   ${req_json}
 
 
 Get Pad Id
@@ -568,7 +567,7 @@ Get Pad Id
      Log  ${pad-id}
      Exit For Loop IF    '${pad-id}' is not '${None}'
     END
-    Return  ${pad-id}
+   [Return] ${pad-id}
 
 
 Get Kit Status Create Time
@@ -586,7 +585,7 @@ Get Kit Status Create Time
      Log  ${createTime}
      Exit For Loop IF    '${createTime}' is not '${None}'
     END
-    Return  ${createTime}
+   [Return] ${createTime}
 
 
 Get Pad Status Create Time
@@ -606,7 +605,7 @@ Get Pad Status Create Time
      Log  ${createTime}
      Exit For Loop IF    '${createTime}' is not '${None}'
     END
-    Return  ${createTime}
+   [Return] ${createTime}
 
 
 
@@ -628,7 +627,7 @@ Get Time Of Event From MessageLog
     #\   ${eventtime}=  Run keyword if  ${len}>0  Get Key Value  ${json_list}  ${len}  'messageType'  ${event}  'time'
     #\   Log  ${eventtime}
     #\   Exit For Loop IF    '${eventtime}' is not '${None}'
-    Return  ${eventtime}
+   [Return] ${eventtime}
 
 Check Upcoming Event Message
     [Arguments]  ${APP_VERSION}  ${URL}   ${event}   ${eventvalue}  ${key}  ${Keyvalue}   ${Sequence}  ${tobeCheckedKey}  ${tobeCheckedValue}
@@ -664,7 +663,7 @@ Extract Messages From Upcoming Event
       run keyword if  '${new1}' == '${keyValue}'   append to list   ${new_json}    ${json_list [${INDEX}]}
     END
     log   ${new_json}
-    Return  ${new_json}
+   [Return] ${new_json}
 
 Get Variable Value
     [Arguments]  ${APP_VERSION}  ${URL}  ${variable}
@@ -672,7 +671,7 @@ Get Variable Value
     ${json_len}=  get length  ${json}
     ${valuevalue}=  Run keyword if  ${json_len}>0  Get Key Value  ${json}  ${json_len}  'key'  ${variable}  'value'
     Log   ${valuevalue}
-    Return  ${valuevalue}
+   [Return] ${valuevalue}
 
 Set Variable Value
     [Arguments]  ${APP_VERSION}  ${URL}  ${variable}  ${variableValue}  ${variableDesc}
@@ -684,7 +683,7 @@ Set Variable Value
     ${Response} =  Post On Session  my_session  ${communication_api_variables}  data=${data}  headers=${headers}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response}
+   [Return] ${Response}
 
 Set Upcoming Event
     [Arguments]  ${APP_VERSION}  ${URL}  ${eventid}  ${seqNum}  ${sourceEventType}  ${upcomingEventType}  ${timeoutDuration}
@@ -696,7 +695,7 @@ Set Upcoming Event
     ${Response} =  Post On Session  my_session  ${communication_api_upcomingmeta}  data=${data}  headers=${headers}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response}
+   [Return] ${Response}
 
 
 Get Product Type Value
@@ -705,7 +704,7 @@ Get Product Type Value
      ${json_len}=  get length  ${json}
      ${producttype_value}=  Run keyword if  ${json_len}>0  Get Key Value  ${json}  ${json_len}  'name'  ${producttype}  '${getvalue}'
      Log  ${producttype_value}
-     Return  ${producttype_value}
+    [Return] ${producttype_value}
 
 
 
@@ -780,7 +779,7 @@ Get Product Type ID From Kit
     Log  ${json}
     Log  ${json['productTypeId']}
     ${productTypeId}=  set variable  ${json['productTypeId']}
-    Return  ${productTypeId}
+   [Return] ${productTypeId}
 
 Get Kit Status
     [Arguments]      ${APP_VERSION}  ${URL}  ${kitid}
@@ -788,14 +787,14 @@ Get Kit Status
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_kit_details}  ${account_api_oauthadmin}
     ${status}=  run keyword if  '${json['hid']}' == '${kitid}'  Set variable  ${json['status']}
     ${kitstatus}=  run keyword if  ${status} is not ${None}  set variable  ${status['type']}
-    Return  ${kitstatus}
+   [Return] ${kitstatus}
 
 Get Assay Name
     [Arguments]      ${APP_VERSION}  ${URL}  ${Assayid}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_assay}  ${account_api_oauthlab}
     ${json_len}=  get length  ${json}
     ${assayname}=  Run keyword if  ${json_len}>0  Get Key Value  ${json}  ${json_len}  'id'  ${Assayid}  'name'
-    Return  ${assayname}
+   [Return] ${assayname}
 
 Get Product Type Name
     [Arguments]  ${APP_VERSION}  ${URL}  ${producttypeid}
@@ -809,7 +808,7 @@ Get Product Type Name
     ${producttype_name}=  Set Variable If  '${data['id']}' == '${producttypeid}'  ${data['name']}
     Exit For Loop IF    '${producttype_name}' is not '${None}'
     END
-    Return  ${producttype_name}
+   [Return] ${producttype_name}
 
 
 Get Assay List from Product
@@ -825,10 +824,10 @@ Get Assay List from Product
     ${assays_list}=  Set Variable If  '${data['name']}' == '${producttype_name}'  ${data['panelIds']}
     Exit For Loop IF    ${assays_list} != ${None}
     END
-    Return  ${assays_list}
+   [Return] ${assays_list}
 
 Get Assay List From Panel Id
-    [Arguments]  ${APP_VERSION}  ${URL}  ${panelId}
+    [Arguments]  ${APP_VERSION}  ${URL}  ${panelId}  ${producttype_name}
     ${json_list}=  get json  ${APP_VERSION}  ${URL}  ${product_api_panel}  ${account_api_oauthadmin}
     ${list_len}=  get length  ${json_list}
     FOR    ${INDEX}  IN RANGE    0    ${list_len}
@@ -839,7 +838,7 @@ Get Assay List From Panel Id
     ${assays_list}=  Set Variable If  '${data['name']}' == '${producttype_name}'  ${data['tests']}
     Exit For Loop IF    ${assays_list} != ${None}
     END
-    Return  ${assays_list}
+   [Return] ${assays_list}
 
 
 
@@ -849,7 +848,7 @@ Get Group Id
     ${list_len}=  get length  ${json}
     ${groupid}=  run keyword if  ${list_len}>0  Get Key Value  ${json}  ${list_len}  'title'  ${title_name}  'id'
     log  ${groupid}
-    Return  ${groupid}
+   [Return] ${groupid}
 
 
 Get Group Participant Id
@@ -860,7 +859,7 @@ Get Group Participant Id
     ${list_len}=  get length  ${json_list}
     ${participantid}=  run keyword if  ${list_len}>0  Get Key Value  ${json_list}  ${list_len}  'customerId'   ${legalid}   'id'
     Log   ${participantid}
-    Return  ${participantid}
+   [Return] ${participantid}
 
 Get Group Participant Status
     [Arguments]  ${APP_VERSION}  ${URL}    ${groupid}   ${legalid}
@@ -872,7 +871,7 @@ Get Group Participant Status
     Log   ${participantstatus}
     ${participantstatustype}=  Set Variable  ${participantstatus['type']}
     Log  ${participantstatustype}
-    Return  ${participantstatustype}
+   [Return] ${participantstatustype}
 
 
 
@@ -892,7 +891,7 @@ Get Wizard step details
      ${json}=    get json  ${APP_VERSION}  ${URL}  ${product_api_wizard_details}  ${account_api_oauthadmin}
      ${steps}=  run keyword if  '${json['id']}' == '${wizid}'  Set variable  ${json['steps']}
      Log  ${steps}
-     Return  ${steps}
+    [Return] ${steps}
 
 
 Submit Survey
@@ -908,7 +907,7 @@ Submit Survey
     ${Response} =  Post On Session  my_session  ${request_url}   headers=${headers}   data=${Surveyjson}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 
 Submit Account Steps
@@ -933,7 +932,7 @@ Submit Account Steps
      ${Response} =  Post On Session  my_session  ${account_api_survey}   headers=${headers}   data=${Submit_Account_Steps4}
      Log  ${Response.content}
      should be equal as strings  ${Response.status_code}  200
-     Return  ${Response.text}
+    [Return] ${Response.text}
 
 Enroll in Group
     [Arguments]  ${APP_VERSION}  ${URL}  ${title_name}  ${customer_legalid}
@@ -946,7 +945,7 @@ Enroll in Group
     ${Response}=  Post On Session  my_session  ${account_api_enrollgroup}  headers=${headers}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 Get Assay Result Id
     [Arguments]  ${APP_VERSION}  ${URL}  ${kitId}   ${kitStatus}
@@ -959,7 +958,7 @@ Get Assay Result Id
     ${assayResults}=  run keyword if  '${json['kitId']}' == '${kitid}'   Set Variable   ${json['assayResults']}
     ${assayResults}=  Set Variable  ${assayResults[0]}
     ${assayResultsid}=  Set Variable  ${assayResults['id']}
-    Return  ${assayResultsid}
+   [Return] ${assayResultsid}
 
 Set Physician Approval
     [Arguments]  ${APP_VERSION}  ${URL}  ${analysisReqId}   ${StatusToUpdate}
@@ -970,14 +969,14 @@ Set Physician Approval
     ${Response}=  Post On Session  my_session  ${physicianApprovalURL}  headers=${headers}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 Get Assay Details
     [Arguments]     ${APP_VERSION}  ${URL}  ${name}  ${title}
     ${json}=  get json  ${APP_VERSION}  ${URL}  ${product_api_assay}  ${account_api_oauthadmin}
     ${json_len}=  get length  ${json}
     ${titlename}=  Run keyword if  ${json_len}>0  Get Key Value  ${json}  ${json_len}  'name'  ${name}  '${title}'
-    Return  ${titlename}
+   [Return] ${titlename}
 
 Update Assay details
     [Arguments]     ${APP_VERSION}  ${URL}  ${name}   ${time}
@@ -1006,7 +1005,7 @@ Update Assay details
     ${Response} =  Post On Session  my_session  ${request_url}   headers=${headers}   data=${Assayupdatejson}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  201
-    Return  ${Response.text}
+   [Return] ${Response.text}
 
 Get total Analysis Request Per Customer
     [Arguments]  ${APP_VERSION}  ${URL}
@@ -1027,7 +1026,7 @@ Get total Analysis Request Per Customer
     ${max_num}=  Evaluate  max(${count_list})
     log   ${max_num}
 
-    For  ${INDEX}  IN RANGE    0    ${len}
+    FOR  ${INDEX}  IN RANGE    0    ${len}
     ${count}=  Get From List  ${count_list}  ${INDEX}
     Run Keyword If  '${count}'=='${max_num}'   log  ${INDEX}
     Exit For Loop IF    '${count}'=='${max_num}'
@@ -1035,7 +1034,7 @@ Get total Analysis Request Per Customer
     Log  ${INDEX}
     ${legal_id}=  Get From List  ${legal_id_list}  ${INDEX}
     Log  ${legal_id}
-   Return  ${legal_id}
+  [Return] ${legal_id}
 
 Get Dendi Order Code
     [Arguments]  ${APP_VERSION}  ${URL}  ${kitId}
@@ -1047,7 +1046,7 @@ Get Dendi Order Code
     #Log  ${json_list}
     log  ${json['id']}
     ${externalOrderCode}=  Set Variable  ${json['externalOrderCode']}
-    Return  ${externalOrderCode}
+   [Return] ${externalOrderCode}
 
 #
 #Get Dendi UUID
@@ -1073,7 +1072,7 @@ Get Json Param Dendi
     should be equal as strings  ${Response.status_code}  200
     ${json} =  Set variable  ${Response.json()}
     Log  ${json}
-    Return  ${json['${jsonparam}']}
+   [Return] ${json['${jsonparam}']}
 
 
 Get Json Dendi
@@ -1088,7 +1087,7 @@ Get Json Dendi
     ${json} =  Set variable  ${Response.json()}
     Log  ${json}
     Log  ${Response.json()}
-    Return  ${json}
+   [Return] ${json}
 
 Get Dendi Order UUID
     [Arguments]  ${URL}  ${OrderID}
@@ -1099,7 +1098,7 @@ Get Dendi Order UUID
     FOR    ${INDEX}  IN RANGE    0    ${list_len}
         ${dendiOrderUuid}=  Evaluate   ${json_results_list[${INDEX}]}.get('uuid')
     END
-    Return  ${dendiOrderUuid}
+   [Return] ${dendiOrderUuid}
 
 Get Dendi Order Tests
     [Arguments]  ${URL}  ${OrderID}
@@ -1107,7 +1106,7 @@ Get Dendi Order Tests
     ${json}=  Get Json Dendi  ${URL}  ${dendi_api_order_orderid}  ${dendi_api_auth}
     ${dendiOrderTest}  Set Variable  ${json['results']}
     log  ${dendiOrderTest}
-    Return  ${dendiOrderTest}
+   [Return] ${dendiOrderTest}
 
 
 Receive Dendi Order
@@ -1120,7 +1119,7 @@ Receive Dendi Order
     Should Be Equal As Strings    ${response.status_code}    200
 
 Reject Dendi Order
-    [Arguments]  ${URL}  ${dendiOrderCode}  ${token}
+    [Arguments]  ${URL}  ${dendiOrderCode}  ${token}  ${dendi_api_order_reject}
     ${dendiOrderUuid}=  Get Dendi Order UUID  ${URL}  ${dendiOrderCode}
     Create Session    test_session    ${URL}
     ${dendi_api_order_reject_full}=   Catenate    SEPARATOR=  ${dendi_api_order_reject}  ${dendiOrderUuid}
@@ -1192,7 +1191,7 @@ Create Dendi List For HbA1c
         Set to Dictionary  ${json[0]}   tests=${tests}
         log  ${json}
         END
-    Return  ${json}
+   [Return] ${json}
 
 
 Export Assay Result XL For Kit
@@ -1212,4 +1211,4 @@ Export Assay Result XL For Kit
     ${assayresultfilename}=  Catenate  SEPARATOR=  ${todaysdate}  ${assayresultfilename}
     Log  ${Response.content}
     Create Binary File     ${EXECDIR}/data/${assayresultfilename}     ${Response.content}
-    Return  ${EXECDIR}/data/${assayresultfilename}
+   [Return] ${EXECDIR}/data/${assayresultfilename}
