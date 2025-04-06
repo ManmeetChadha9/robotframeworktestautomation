@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  This is a test suite for Qurasense GUI Testing
-Resource  ../data/GlobalVariables.robot
+Resource  ../data/global_variables.robot
 Resource    ../resources/PageActions.robot
 Resource    ../resources/CustomActions.robot
 *** Variables ***

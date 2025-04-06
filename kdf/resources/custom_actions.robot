@@ -4,10 +4,10 @@ Library  DateTime
 Library  OperatingSystem
 Library  Collections
 Library  String
-Library  ../libs/CustomSeleniumLibrary.py
-Resource  PageActions.robot
-Resource  APIMethodActions.robot
-Resource  ../data/GlobalVariables.robot
+Library  ../libs/custom_selenium_library.py
+Resource  page_actions.robot
+Resource  api_utils.robot
+Resource  ../data/global_variables.robot
 
 
 *** Variables ***
@@ -16,30 +16,30 @@ Resource  ../data/GlobalVariables.robot
 
 Todays Date
     ${date} =  Get Current Date  exclude_millis=TRUE
-    [Return]  ${date}
+    RETURN  ${date}
 
 Get Date After Adding Days
     [Arguments]  ${date}    ${number}  ${outputDateFormat}
     ${date} =  Add Time To Date	${date}	 ${number} days
     log to console  ${date}
     ${datetime} =	 Convert Date	${date}	 result_format=${outputDateFormat}
-   [Return]   ${datetime}
+   RETURN   ${datetime}
 
 Get Day From Date
     [Arguments]  ${dateandtime}
     ${datetime} =	Convert Date	${dateandtime}	 datetime
-   [Return]   ${datetime.day}
+   RETURN   ${datetime.day}
 
 
 Convert String To Date
     [Arguments]  ${dateandtime}  ${inputdateformat}
     ${datetime} =	Convert Date  ${dateandtime}  date_format=${inputdateformat}   exclude_millis=yes
-   [Return]   ${datetime}
+   RETURN   ${datetime}
 
 Get Date From Date
     [Arguments]  ${dateandtime}
     ${datetime} =	Convert Date  ${dateandtime}  result_format=%m/%d/%Y
-   [Return]   ${datetime}
+   RETURN   ${datetime}
 
 Get Time From Date
     [Arguments]  ${dateandtime}
@@ -54,18 +54,18 @@ Get Time From Date
     #${time}=    Set Variable If  ${hours} < 12  ${hours}:${minutes} AM
     #${time}=    Set Variable If  ${hours} == 12  ${hours}:${minutes} PM
     Log to console  ${time}
-   [Return]   ${time}
+   RETURN   ${time}
 
 Get PM Time
     [Arguments]  ${hourspm}  ${minutespm}
     ${hourspm}=  run keyword if  ${hourspm} > 12  Evaluate  ${hourspm}-12  ELSE  Set Variable  ${hourspm}
     ${timepm}=   Set variable  ${hourspm}:${minutespm} PM
-   [Return]   ${timepm}
+   RETURN   ${timepm}
 
 Get AM Time
     [Arguments]  ${hoursam}  ${minutesam}
     ${timeam}=   Set variable  ${hoursam}:${minutesam} AM
-   [Return]   ${timeam}
+   RETURN   ${timeam}
 
 Create Admin Authentication Endpoint
     [Arguments]  ${username}  ${password}  ${2facode}  ${channel}
@@ -79,7 +79,7 @@ Create Customer Authentication Endpoint
     ${account_api_oauthcustomer}=  Create Dictionary   username=${username}  password=${password}   2fa_code=${2facode}   verify_channel=${channel}
 #    Set Variable  /account_api/oauth/token?username=${username}&password=${password}&grant_type=password&2fa_code=${2facode}&verify_channel=${channel}
     log  ${account_api_oauthcustomer}
-   [Return] ${account_api_oauthcustomer}
+   RETURN ${account_api_oauthcustomer}
 
 Create Lab Authentication Endpoint
     [Arguments]  ${username}  ${password}  ${2facode}  ${channel}
@@ -146,7 +146,7 @@ Verify Text In Excel
 Get Data From Excel
     [Arguments]   ${file}    ${Column_Data}
     ${readResult}=  Fetch XL  ${file}    ${Column_Data}
-   [Return] ${readResult}
+   RETURN ${readResult}
 
 Verify Text Not In Excel
     [Arguments]   ${file}  ${textToSearch}
@@ -157,7 +157,7 @@ Verify Text Not In Excel
 Post Form Data Request
      [Arguments]  ${URL}  ${headers}  ${file}
      ${Response} =  Post File  ${URL}  ${headers}  ${file}
-    [Return] ${Response}
+    RETURN ${Response}
 
 
 
@@ -184,7 +184,7 @@ Get Key Value
         Log  ${valueRetrieved}
         Exit For Loop IF    "${valueRetrieved}" is not "${None}" or ${INDEX} == ${list_len} - 1
     END
-    [Return] ${valueRetrieved}
+    RETURN ${valueRetrieved}
 
 
 Get Key Value Further
@@ -195,7 +195,7 @@ Get Key Value Further
     ${value}=  Evaluate   ${data[${INDEX}]}.get(${key2})
     ${my_string2}=  Run Keyword If  '${value}' is not '${None}'  convert to string  ${data[${INDEX}][${key2}]}
     ${valueRetrieved}=  Run Keyword If  '${my_string1}' == '${keyvalue1}' and '${my_string2}' == '${keyvalue2}'  Set Variable  ${data[${INDEX}][${keyToRetrieve}]}
-   [Return] ${valueRetrieved}
+   RETURN ${valueRetrieved}
 
 
 
@@ -205,7 +205,7 @@ Calculate Event Time
     ${datetime}=  Extract DateTime From EventTime  ${basedatetime}
     ${derivedtime}=  Add Time To Date  ${datetime}  ${variablemins} minutes
     Log  ${derivedtime}
-   [Return] ${derivedtime}
+   RETURN ${derivedtime}
 
 Extract DateTime From EventTime
     [Arguments]  ${basedatetime}
@@ -215,7 +215,7 @@ Extract DateTime From EventTime
     ${timesubstring}=  Replace String  ${timesubstring}  T  ' '
     Log  ${timesubstring}
     ${datetime}=  Convert Date  ${timesubstring}
-   [Return] ${datetime}
+   RETURN ${datetime}
 
 
 Check Message Log Time After KitUseStart
@@ -267,12 +267,12 @@ Check Message Log Time After Event
 Get Table Row Count
     [Arguments]  ${Locator_Type}  ${Row_Locator_Value}
     ${rowCount}=   Get Element Count  tag:tr
-   [Return] ${rowCount}
+   RETURN ${rowCount}
 
 Get Table Col Count
     [Arguments]  ${Locator_Type}  ${Col_Locator_Value}
     ${colCount}=   Get Element Count  tag:td
-   [Return] ${colCount}
+   RETURN ${colCount}
 
 
 
@@ -287,7 +287,7 @@ Create Assay Name List
       Run keyword   Append To List  ${assaynamelist}  ${Assayname}
       Log  ${assaynamelist}
     END
-    [Return] ${assaynamelist}
+    RETURN ${assaynamelist}
 
 Check Assay For Kits
     [Arguments]  ${APP_VERSION}  ${URL}  ${table_locator}  ${rows}  ${kit_col}  ${assay_col}  ${Jump}
@@ -319,7 +319,7 @@ Fetch Kit id from UI
     [Arguments]  ${String}
     ${index}=  Get_character_index_in_string  ${String}  (
     ${kitid}=  get substring  ${String}  ${index}  -1
-   [Return] ${kitid}
+   RETURN ${kitid}
 
 Check UI Kit Status
     [Arguments]  ${APP_VERSION}  ${URL}   ${kit_list}   ${lookup_text1}  ${lookup_text2}=${None}  ${lookup_text3}=${None}
@@ -338,7 +338,7 @@ Get step id
     ${list_len}=  get length  ${steps}
     ${step_id}=  run keyword if  ${list_len}>0  Get Key Value  ${steps}  ${list_len}  'name'  ${step_name}  'id'
     Log  ${step_id}
-   [Return] ${step_id}
+   RETURN ${step_id}
 
 
 Create new User
@@ -351,7 +351,7 @@ Create new User
     ${Response} =  Post On Session  my_session  ${accout_api_create_user}
     Log  ${Response.content}
     should be equal as strings  ${Response.status_code}  200
-   [Return] ${Response.text}
+   RETURN ${Response.text}
 
 
 
@@ -359,13 +359,13 @@ Create new User
 Reading CSV
     [Arguments]    ${csvfile}
     ${csv_file}  read csv file    ${csvfile}
-   [Return] ${csv_file}
+   RETURN ${csv_file}
 
 
 Convert Excel to CSV
     [Arguments]    ${excelFile}  ${worksheetName}
     ${converted_csv}  convert excelworkSheet to csv   ${excelFile}  ${worksheetName}
-   [Return] ${converted_csv}
+   RETURN ${converted_csv}
 
 Get Result Data From CSV
     [Arguments]    ${testName_list}   ${calcutedResults}  ${chlorideValue}  ${result_index}   ${results}  ${feild_names}
@@ -424,4 +424,4 @@ Download Excel from Cloud
 
     [Arguments]     ${bucket_name}    ${file_names}   ${output_file_location}   ${token}
     ${output_file}   fetching excel from cloud  ${bucket_name}    ${file_names}   ${output_file_location}   ${token}
-   [Return] ${output_file}
+   RETURN ${output_file}

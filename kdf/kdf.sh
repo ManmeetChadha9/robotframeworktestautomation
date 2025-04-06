@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#python libs/TestCaseGen.py data/GUITestCases_ids.xls tests
+#python libs/test_case_gen.py data/GUITestCases_ids.xls tests
 echo "Dashboard url is: ${DASHBOARD_URL}"
 echo "Secure url is: ${SECURE_URL}"
 echo "Dendi url is: ${DENDI_URL}"

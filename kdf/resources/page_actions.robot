@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation  This layer is for creating web page specific keywords
 Library  SeleniumLibrary
-Library  ../libs/CustomSeleniumLibrary.py
-Resource  CustomActions.robot
+Library  ../libs/custom_selenium_library.py
+Resource  custom_actions.robot
 
 *** Variables ***
 
@@ -37,7 +37,7 @@ Get Browser Console Log Entries
     ${selenium}=    Get Library Instance    SeleniumLibrary
     ${webdriver}=    Set Variable     ${selenium._drivers.active_drivers}[0]
     ${log entries}=    Evaluate    $webdriver.get_log('browser')
-   [Return]   ${log entries}
+   RETURN   ${log entries}
 
 
 Open Headless Browser
@@ -180,7 +180,7 @@ Add Days To Today
     [Arguments]  ${days}
     ${TodaysDate}=  Todays Date
     ${Date}=  Get Date After Adding Days  ${TodaysDate}  ${days}  %m.%d.%Y
-   [Return]   ${Date}
+   RETURN   ${Date}
 
 Setup Call On
     [Arguments]  ${datetime}
@@ -222,7 +222,7 @@ Get Text From Table
     ${textlocator}=   Get Table Column Row Locator   ${Locator_Type}  ${Table_Locator_Value}  ${Element_Locator_Value}  ${col_num}  ${lookup_text}  ${lookup_text2}
     set selenium timeout  10s
     ${text}=   get text from xpath  ${textlocator}
-   [Return] ${text}
+   RETURN ${text}
 
 Identify And Check Checkbox
     [Arguments]  ${Locator_Type}  ${Table_Locator_Value}  ${Element_Locator_Value}  ${first_last_name}
@@ -262,7 +262,7 @@ Get Text From Xpath
     [Arguments]  ${Locator_Value}
     ${text}=   Get Text  ${Locator_Value}
     Log  ${text}
-   [Return] ${text}
+   RETURN ${text}
 
 Get List From Table
     [Arguments]    ${table_locator}  ${rows}  ${col_num}  ${Jump}
@@ -274,7 +274,7 @@ Get List From Table
      ${text}=  convert to string  ${text}
      Run keyword   Append To List  ${text_list}  ${text}
      END
-    [Return] ${text_list}
+    RETURN ${text_list}
 
 Set Analysis Approval
     [Arguments]   ${locator_type}  ${table_locator}  ${test_name}  ${col_num}  ${approval}  ${element_locator}=${emptystring}
