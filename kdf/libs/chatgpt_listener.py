@@ -1,8 +1,11 @@
-import openai
+# chatgpt_listener.py
+
 import os
 from datetime import datetime
+from openai import OpenAI, OpenAIError
 
 print(">>> ChatGPTListener file loaded!")
+
 class ChatGPTListener:
     ROBOT_LISTENER_API_VERSION = 3
 
@@ -13,7 +16,8 @@ class ChatGPTListener:
             self.enabled = False
             return
 
-        openai.api_key = self.api_key
+        # Initialize OpenAI client (new SDK style)
+        self.client = OpenAI(api_key=self.api_key)
         self.enabled = True
         self.test_results = []
 
@@ -33,6 +37,7 @@ class ChatGPTListener:
         if not self.enabled:
             return
 
+        print(f"[ChatGPTListener] Ending test: {data.name}")
         test_summary = f"Test: {data.name}\nStatus: {result.status}\nMessage: {result.message or 'No message'}\n"
         self.test_results.append(test_summary)
 
@@ -46,7 +51,6 @@ class ChatGPTListener:
             return
 
         print("[ChatGPTListener] Close method called.")
-
         summary_prompt = "Summarize the following Robot Framework test results in a concise, clear way:\n\n" + "\n".join(self.test_results)
         summary = self.ask_chatgpt(summary_prompt)
 
@@ -58,11 +62,11 @@ class ChatGPTListener:
 
     def ask_chatgpt(self, prompt):
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            response = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}]
             )
-            return response.choices[0].message["content"]
-        except Exception as e:
+            return response.choices[0].message.content
+        except OpenAIError as e:
             print(f"[ChatGPTListener] Error contacting ChatGPT: {e}")
             return "⚠️ ChatGPT error: Could not generate response."
