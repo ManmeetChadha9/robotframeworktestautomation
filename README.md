@@ -7,7 +7,9 @@ It uses:
 * Panda library
 * Requests library 
 * Xlrd library
-* Custom python code for keyword generation
+* OpenAI library
+* Custom python code for keyword generation 
+* A listener to harness the capabilities of ChatGPT
   
 The client's requirement was a test automation framework, which could be used and maintained easily. Hence took the Action Keyword approach.
 The test suites in robot framework get automatically generated based on input in the XL File where the non-technical tester can write test cases, using keywords.
@@ -24,6 +26,7 @@ pip install -U robotframework robotframework-seleniumlibrary requests robotframe
 pip install pandas
 pip install xlrd
 pip install openpyxl
+pip install openai
 
 # INSTALL browser drivers eg: chromedriver for Chrome. Place into directory and add the same to environment variable PATH.
 
@@ -33,7 +36,12 @@ Firefox: https://github.com/mozilla/geckodriver/releases
 Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
 
 # COMMAND to create robot test files from the XLS file
-python libs/TestCaseGen.py data/GUITestCases.xlsx tests
+python libs/test_case_gen.py data/GUITestCases.xlsx website_tests
+python libs/test_case_gen.py data/APITestCases.xlsx api_tests
 
-# COMMAND to execute robot tests
-robot --variable TEST_URL:"https://saucedemo.com/" --variable BROWSER:headlesschrome -d results/SwagLabs-headlesschrome -x SwagLabs.xml tests/SwagLabs.robot
+# COMMANDS to execute robot tests
+
+export PYTHONPATH=.   (# Set Python path to current directory so Robot can find our listener )
+export OPENAI_API_KEY="sk-xxxxxx"  (# Set this env variable equal to the OpenAI API KEY )
+robot --listener libs/chatgpt_listener.py --variable TEST_URL:"https://saucedemo.com/" --variable BROWSER:headlesschrome -d results/website_tests/SwagLabs-headlesschrome -x SwagLabs.xml website_tests/SwagLabs.robot
+robot --listener libs/chatgpt_listener.py --variable TEST_URL:"https://json-placeholder.mock.beeceptor.com/" -d results/api_tests/jsonplaceholderapi -x jsonplaceholderapi.xml api_tests/jsonplaceholderapi.robot
