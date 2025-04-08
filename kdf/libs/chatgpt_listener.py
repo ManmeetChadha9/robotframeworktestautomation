@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from openai import OpenAI, OpenAIError
 
-print(">>> ChatGPTListener file loaded!")
+
 
 class ChatGPTListener:
     ROBOT_LISTENER_API_VERSION = 3

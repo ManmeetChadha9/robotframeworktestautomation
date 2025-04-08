@@ -1,8 +1,9 @@
 *** Settings ***
 Documentation  This is a test suite for Qurasense GUI Testing
 Resource  ../data/global_variables.robot
-Resource    ../resources/PageActions.robot
-Resource    ../resources/CustomActions.robot
+Resource    ../resources/page_actions.robot
+Resource    ../resources/custom_actions.robot
+Resource    ../resources/api_oldutils.robot
 *** Variables ***
 
 ${forUser}=   ${communication_api_messageLogs_legalentity}

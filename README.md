@@ -39,9 +39,23 @@ Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
 python libs/test_case_gen.py data/GUITestCases.xlsx website_tests
 python libs/test_case_gen.py data/APITestCases.xlsx api_tests
 
-# COMMANDS to execute robot tests
+# COMMANDS to setup env variables and execute robot tests
 
-export PYTHONPATH=.   (# Set Python path to current directory so Robot can find our listener )
+export PYTHONPATH=.   (# Set Python path to current directory so Robot can find our listener OR do this step while executing the robot test as below)
 export OPENAI_API_KEY="sk-xxxxxx"  (# Set this env variable equal to the OpenAI API KEY )
-robot --listener libs/chatgpt_listener.py --variable TEST_URL:"https://saucedemo.com/" --variable BROWSER:headlesschrome -d results/website_tests/SwagLabs-headlesschrome -x SwagLabs.xml website_tests/SwagLabs.robot
-robot --listener libs/chatgpt_listener.py --variable TEST_URL:"https://json-placeholder.mock.beeceptor.com/" -d results/api_tests/jsonplaceholderapi -x jsonplaceholderapi.xml api_tests/jsonplaceholderapi.robot
+
+PYTHONPATH=. robot \
+--listener libs.chatgpt_listener.ChatGPTListener \
+--variable TEST_URL:"https://json-placeholder.mock.beeceptor.com/" \
+-d results/api_tests/jsonplaceholderapi \
+-x jsonplaceholderapi.xml \
+api_tests/jsonplaceholderapi.robot
+
+
+PYTHONPATH=. robot \
+--listener libs.chatgpt_listener.ChatGPTListener \
+--variable TEST_URL:"https://saucedemo.com/" \
+--variable BROWSER:headlesschrome \
+-d results/website_tests/SwagLabs-headlesschrome \
+-x SwagLabs.xml \
+website_tests/SwagLabs.robot
