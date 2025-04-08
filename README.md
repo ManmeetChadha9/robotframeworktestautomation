@@ -14,6 +14,9 @@ It uses:
 The client's requirement was a test automation framework, which could be used and maintained easily. Hence took the Action Keyword approach.
 The test suites in robot framework get automatically generated based on input in the XL File where the non-technical tester can write test cases, using keywords.
 
+Some Demo videos:
+https://youtu.be/FMlDgnSfVjY
+
 
 <img width="655" alt="image" src="https://github.com/user-attachments/assets/6534e344-920d-4805-9209-13e090dc9137" />
 
