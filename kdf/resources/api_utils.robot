@@ -52,6 +52,50 @@ Retrieve Response Json From Get
     Log  ${Response.json()}
    RETURN  ${json}
 
+Retrieve Response Json From Put
+    [Arguments]    ${URL}    ${endpoint}    ${inputjson}
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    Create Session    my_session    ${URL}
+    ${response}=    PUT On Session    my_session    ${endpoint}    headers=${headers}    json=${inputjson}
+    Log    ${response.content}
+    Should Be Equal As Strings    ${response.status_code}    200
+    ${json}=    Set Variable    ${response.json()}
+    RETURN    ${json}
+
+Retrieve Response Json From Delete
+    [Arguments]    ${URL}    ${endpoint}
+    Create Session    my_session    ${URL}
+    ${response}=    DELETE On Session    my_session    ${endpoint}
+    Log    ${response.status_code}
+    Should Be Equal As Strings    ${response.status_code}    200
+    ${json}=    Set Variable    ${response.json()}
+    RETURN    ${json}
+
+Retrieve Error Response From Get
+    [Arguments]    ${URL}    ${endpoint}
+    Create Session    my_session    ${URL}
+    ${response}=    GET On Session    my_session    ${endpoint}
+    Log    ${response.status_code}
+    Should Not Be Equal As Strings    ${response.status_code}    200
+    RETURN    ${response.json()}
+
+Retrieve Error Response From Put
+    [Arguments]    ${URL}    ${endpoint}    ${inputjson}
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    Create Session    my_session    ${URL}
+    ${response}=    PUT On Session    my_session    ${endpoint}    headers=${headers}    json=${inputjson}
+    Log    ${response.status_code}
+    Should Not Be Equal As Strings    ${response.status_code}    200
+    RETURN    ${response.json()}
+
+Retrieve Error Response From Post
+    [Arguments]    ${URL}    ${endpoint}    ${inputjson}
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    Create Session    my_session    ${URL}
+    ${response}=    POST On Session    my_session    ${endpoint}    headers=${headers}    json=${inputjson}
+    Log    ${response.status_code}
+    Should Not Be Equal As Strings    ${response.status_code}    200
+    RETURN    ${response.json()}
 
 
 Get Count From Json

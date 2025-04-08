@@ -43,6 +43,7 @@ python libs/test_case_gen.py data/APITestCases.xlsx api_tests
 
 export PYTHONPATH=.   (# Set Python path to current directory so Robot can find our listener OR do this step while executing the robot test as below)
 export OPENAI_API_KEY="sk-xxxxxx"  (# Set this env variable equal to the OpenAI API KEY )
+export CHATGPT_TAGS=sms,account
 
 PYTHONPATH=. robot \
 --listener libs.chatgpt_listener.ChatGPTListener \
@@ -59,3 +60,11 @@ PYTHONPATH=. robot \
 -d results/website_tests/SwagLabs-headlesschrome \
 -x SwagLabs.xml \
 website_tests/SwagLabs.robot
+
+
+PYTHONPATH=. robot \
+--listener libs.chatgpt_listener.ChatGPTListener \
+--variable TEST_URL:"https://twilio-api.mock.beeceptor.com/" \
+-d results/api_tests/twillio_api \
+-x twillio_api.xml \
+api_tests/twillio_api.robot
