@@ -31,6 +31,12 @@ pip install xlrd
 pip install openpyxl
 pip install openai
 
+
+# COMMANDS to install Botium cli and Botium connector with DialogFlow
+brew install node
+npm install -g botium-cli
+npm install -g botium-connector-dialogflow
+
 # INSTALL browser drivers eg: chromedriver for Chrome. Place into directory and add the same to environment variable PATH.
 
 Chrome: https://sites.google.com/a/chromium.org/chromedriver/downloads
@@ -71,3 +77,44 @@ PYTHONPATH=. robot \
 -d results/api_tests/twillio_api \
 -x twillio_api.xml \
 api_tests/twillio_api.robot
+
+
+# ChatBot Testing
+
+Steps below for Gcloud Service Account activation
+
+These steps are executed after Chatbot agent creation in DialogFlow ES is complete
+
+🔹 1. Create a Service Account in Google Cloud Console
+Open the GCP Console
+
+	a) Go to: IAM & Admin → Service Accounts
+	b) Create a new service account:
+	c) Assign it Dialogflow API Client and Dialogflow API Admin  roles
+	d) Create a servie key for the account.
+	e) Download the service key JSON file (the private key file)
+
+🔹 2. Copy the below 3 items from the downloaded JSON file to botium.json file:
+a) client_email
+b) private_key (For me I did not use escape character for \n, even though everywhere online, it was recommended to be added )
+c) project_id
+
+🔹 3. Revoke all active gcloud accounts (Just to be safe)
+
+	gcloud auth application-default revoke
+
+🔹 4. Activate the service account created in Step 1
+
+	gcloud auth activate-service-account kattolum-bot-service@kattolum--wdcb.iam.gserviceaccount.com --key-file=/Users/manmeetchadha/Work/kattolum--wdcb-9316350a79ac.json
+
+🔹 5. Set the config project to be the main Google cloud project that is already associated to DialogFlow. This should be it.
+
+	gcloud config set project kattolum--wdcb
+
+🔹 6. Open the chatbot emulator to check all connections are in place. Type Hi. Chatbot should respond.
+
+	botium-cli emulator --config chatbot_tests/botium.json
+
+🔹 7. This command is used to test all DialogFlow Intents together
+
+	botium-cli run --config chatbot_tests/botium.json --convos chatbot_tests/spec

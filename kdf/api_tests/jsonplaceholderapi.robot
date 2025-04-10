@@ -14,7 +14,7 @@ ROBOT_API Check Company
     ${endpoint}=    Set Variable    /companies
     ${companyCount}=  Get Count From Json  ${TEST_URL}  ${endpoint}
     # Adding a deliberate failure to check the ChatGPT provided suggestions
-    Should Be Equal As Numbers    ${companyCount}    2
+    Should Be Equal As Numbers    ${companyCount}    10
 
     # Get details of a specific company id and check the response
     ${company_id}=    Set Variable    1    # Example company ID
