@@ -1,0 +1,10 @@
+#me
+Recommend a moisturizer for oily skin
+#bot
+?=.*non-comedogenic.*
+
+#me
+What cleanser should I use for acne?
+#bot regexp
+?=.*niacinamide.*
+?=.*salicylic acid.*

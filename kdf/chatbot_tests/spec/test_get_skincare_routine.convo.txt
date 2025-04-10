@@ -1,0 +1,19 @@
+#me
+What skincare routine should I follow?
+#bot
+?=.*general routine.*
+
+#me
+Give me a skincare routine for sensitive skin
+#bot
+?=.*morning routine for sensitive skin.*
+
+#me
+Help me build a skincare routine for dry skin
+#bot exact
+Here’s a basic morning routine for dry skin:
+1. Cleanser
+2. Toner
+3. Serum (optional)
+4. Moisturizer
+5. Sunscreen (if morning)

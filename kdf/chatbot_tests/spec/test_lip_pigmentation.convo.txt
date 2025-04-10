@@ -1,0 +1,13 @@
+#me
+How to remove lip pigmentation?
+#bot
+?=.*exfoliation.*
+?=.*hydration.*
+?=.*SPF lip balms.*
+
+
+#me
+My lips are dark, what can I do?
+#bot
+?=.*licorice extract.*
+?=.*kojic acid.*

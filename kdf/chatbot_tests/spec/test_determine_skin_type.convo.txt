@@ -1,0 +1,9 @@
+#me
+How do I know my skin type?
+#bot
+?=.*help you figure out your skin type.*
+
+#me
+Can you help me determine my skin type?
+#bot exact
+I can help you figure out your skin type! Let's start with a few quick questions.
