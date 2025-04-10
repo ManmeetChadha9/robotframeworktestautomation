@@ -3,7 +3,7 @@
     "Capabilities": {
       "PROJECTNAME": "<Your project name>",
       "CONTAINERMODE": "dialogflow",
-      "DIALOGFLOW_PROJECT_ID": "kattolum--wdcb",
+      "DIALOGFLOW_PROJECT_ID": "<Your DialogFlow Project>",
       "DIALOGFLOW_CLIENT_EMAIL": "Google service account email id",
       "DIALOGFLOW_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\n<Key retrieved from service account in the JSON file>\n-----END PRIVATE KEY-----\n",
       "DIALOGFLOW_LANGUAGE_CODE": "en",
